@@ -1,11 +1,16 @@
-import express from "express";
+import * as dotenv from "dotenv";
+import app from "./app";
 
-const app = express();
-const port = 8000;
+dotenv.config();
 
-app.get("/", (_, res) => {
-  res.send("Enchante");
-});
+// declare module "express" {
+//   export interface Request {
+//     user?: any;
+//     query?: any;
+//   }
+// }
+
+const port = process.env.PORT || "8000";
 
 app
   .listen(port, () => {
