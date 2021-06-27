@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -7,5 +9,7 @@
     "sourceMap": true,
     "outDir": "./dist"
   },
-  "lib": ["es2015"]
+  "lib": [
+    "es2015"
+  ]
 }

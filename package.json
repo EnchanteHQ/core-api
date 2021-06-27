@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "tsc && node ./dist/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix",
     "build": "tsc",
@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "@types/express": "^4.17.12",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "firebase-admin": "^9.10.0"
   },
   "lint-staged": {
     "*.ts": [
