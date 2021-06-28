@@ -46,51 +46,51 @@ abstract class ApiResponse {
   }
 }
 
-export class AuthFailureResponse extends ApiResponse {
-  constructor(message = "Authentication Failure") {
+export class AuthFailureResponse<T> extends ApiResponse {
+  constructor(message = "Authentication Failure", private data: T) {
     super(success.FAILURE, ResponseStatus.UNAUTHORIZED, message);
   }
 }
 
-export class UnprocessableEntry extends ApiResponse {
-  constructor(message = "Unprocessable Entry") {
+export class UnprocessableEntry<T> extends ApiResponse {
+  constructor(message = "Unprocessable Entry", private data: T) {
     super(success.FAILURE, ResponseStatus.UNPROCESSABLE_ENTRY, message);
   }
 }
 
-export class NotFoundResponse extends ApiResponse {
+export class NotFoundResponse<T> extends ApiResponse {
   private url: string;
 
-  constructor(message = "Not Found") {
+  constructor(message = "Not Found", private data: T) {
     super(success.FAILURE, ResponseStatus.NOT_FOUND, message);
   }
 
   send(res: Response): Response {
     this.url = res.req.originalUrl;
-    return super.prepare<NotFoundResponse>(res, this);
+    return super.prepare<NotFoundResponse<T>>(res, this);
   }
 }
 
-export class ForbiddenResponse extends ApiResponse {
-  constructor(message = "Forbidden") {
+export class ForbiddenResponse<T> extends ApiResponse {
+  constructor(message = "Forbidden", private data: T) {
     super(success.FAILURE, ResponseStatus.FORBIDDEN, message);
   }
 }
 
-export class BadRequestResponse extends ApiResponse {
-  constructor(message = "Bad Parameters") {
+export class BadRequestResponse<T> extends ApiResponse {
+  constructor(message = "Bad Parameters", private data: T) {
     super(success.FAILURE, ResponseStatus.BAD_REQUEST, message);
   }
 }
 
-export class InternalErrorResponse extends ApiResponse {
-  constructor(message = "Internal Error") {
+export class InternalErrorResponse<T> extends ApiResponse {
+  constructor(message = "Internal Error", private data: T) {
     super(success.FAILURE, ResponseStatus.INTERNAL_ERROR, message);
   }
 }
 
-export class FailureMsgResponse extends ApiResponse {
-  constructor(message: string) {
+export class FailureMsgResponse<T> extends ApiResponse {
+  constructor(message: string, private data: T) {
     super(success.FAILURE, ResponseStatus.SUCCESS, message);
   }
 }
