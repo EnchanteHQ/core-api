@@ -6,7 +6,7 @@ export default interface User extends Document {
   userImg: string;
   age: number;
   phoneNumber: number;
-  location: string;
+  coordinates: { x: string; y: string };
   walletId: string;
   eventsRegistered: Array<{
     eventId: ObjectId;
@@ -33,7 +33,16 @@ const schema = new Schema({
   phoneNumber: {
     type: Schema.Types.Number,
   },
-  location: { type: Schema.Types.String },
+  coordinates: {
+    lat: {
+      type: Schema.Types.String,
+      default: "",
+    },
+    lon: {
+      type: Schema.Types.String,
+      default: "",
+    },
+  },
   walletId: { type: Schema.Types.String, unique: true },
   eventsRegistered: [
     {

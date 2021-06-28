@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, ObjectId } from "mongoose";
 
 export default interface Event extends Document {
   name: string;
@@ -8,7 +8,7 @@ export default interface Event extends Document {
   location: {
     humanformAddress: string;
     mapsUrl: string;
-    coordinates: string;
+    coordinates: { x: string; y: string };
   };
   tags: Array<string>;
   duration: { startTimeAndDate: string; endTimeAndDate: string };
@@ -52,9 +52,15 @@ const schema = new Schema({
       type: Schema.Types.String,
       default: "",
     },
-    coordiantes: {
-      type: Schema.Types.String,
-      default: "",
+    coordinates: {
+      lat: {
+        type: Schema.Types.String,
+        default: "",
+      },
+      lon: {
+        type: Schema.Types.String,
+        default: "",
+      },
     },
   },
   tags: [

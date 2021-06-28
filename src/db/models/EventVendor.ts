@@ -5,7 +5,7 @@ export default interface EventVendor extends Document {
   location: {
     humanformAddress: string;
     mapsUrl: string;
-    coordinates: string;
+    coordinates: { x: string; y: string };
   };
   menu: Array<{ item: string; price: number; available: boolean }>;
 }
@@ -24,9 +24,15 @@ const schema = new Schema({
       type: Schema.Types.String,
       default: "",
     },
-    coordiantes: {
-      type: Schema.Types.String,
-      default: "",
+    coordinates: {
+      lat: {
+        type: Schema.Types.String,
+        default: "",
+      },
+      lon: {
+        type: Schema.Types.String,
+        default: "",
+      },
     },
   },
   menu: [

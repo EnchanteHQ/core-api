@@ -6,7 +6,7 @@ export default interface Vendor extends Document {
   password: string;
   eventId: ObjectId;
   walletId: string;
-  shopName: string;
+  displayName: string;
 }
 
 const schema = new Schema({
@@ -28,7 +28,7 @@ const schema = new Schema({
     ref: "Event",
   },
   walletId: { type: Schema.Types.String, unique: true },
-  shopName: {
+  displayName: {
     type: Schema.Types.String,
     default: "",
   },

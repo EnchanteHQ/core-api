@@ -4,7 +4,7 @@ export default interface Admin extends Document {
   email: string;
   orgName: string;
   password: string;
-  eventId: ObjectId;
+  eventId: Array<ObjectId>;
   walletId: string;
 }
 
@@ -22,10 +22,12 @@ const schema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  eventId: {
-    type: Schema.Types.ObjectId,
-    ref: "Event",
-  },
+  eventId: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Event",
+    },
+  ],
   walletId: { type: Schema.Types.String, unique: true },
 });
 
