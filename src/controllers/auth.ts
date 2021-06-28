@@ -9,7 +9,7 @@ class AuthController {
     try {
       const { token } = req.body;
 
-      let firebaseUid: string;
+      // let firebaseUid: string;
       let userDetails: admin.auth.UserRecord;
 
       await admin
@@ -17,33 +17,39 @@ class AuthController {
         .verifyIdToken(token)
         .then((decodedToken) => {
           const { uid } = decodedToken;
-          firebaseUid = uid;
+          return uid;
+        })
+        .then(async (uid) => {
+          await admin
+            .auth()
+            .getUser(uid)
+            .then((userRecord) => {
+              userDetails = userRecord;
+            })
+            .catch((error) => {
+              console.error("Error fetching user data:", error);
+              throw new Error("Error Fetching user data");
+            });
         })
         .catch((e) => {
-          console.error("Error in verifing token", e);
+          console.error("Error verifing token", e);
+          throw new Error("Error verifying token");
         });
 
-      await admin
-        .auth()
-        .getUser(firebaseUid)
-        .then((userRecord) => {
-          userDetails = userRecord;
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
+      let jwtToken: string;
 
-      const jwtToken: string = generateJwtToken({ id: userDetails.uid });
-      console.log(jwtToken);
+      if (userDetails !== undefined) {
+        jwtToken = generateJwtToken({ id: userDetails.uid });
+      }
 
       // TODO: send user record to be stored in db
 
       new SuccessResponse("Successfully registered!", {
-        token,
+        jwtToken,
       }).send(res);
-    } catch (error) {
-      console.log(`Error in googleAuth:>> ${error}`);
-      new InternalErrorResponse("Error fetching profile!").send(res);
+    } catch (e) {
+      console.error(`Error in googleAuth:>> ${e}`);
+      new InternalErrorResponse(e.message, {}).send(res);
     }
   };
 }

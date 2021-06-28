@@ -10,7 +10,7 @@ class UserController {
       );
     } catch (error) {
       console.log(`tbd:>> ${error}`);
-      new InternalErrorResponse("Error fetching profile!").send(res);
+      new InternalErrorResponse("Error fetching profile!", {}).send(res);
     }
   };
 }
