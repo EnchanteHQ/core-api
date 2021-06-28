@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/EnchanteHQ/core-api#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/passport": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
@@ -44,7 +46,11 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.12.15"
+    "firebase-admin": "^9.10.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.15",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   },
   "lint-staged": {
     "*.ts": [
