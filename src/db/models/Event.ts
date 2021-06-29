@@ -8,7 +8,7 @@ export default interface Event extends Document {
   location: {
     humanformAddress: string;
     mapsUrl: string;
-    coordinates: { x: string; y: string };
+    coordinates: { lat: string; lon: string };
   };
   tags: Array<string>;
   duration: { startTimeAndDate: string; endTimeAndDate: string };
