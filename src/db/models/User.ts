@@ -34,6 +34,14 @@ const schema = new Schema({
   phoneNumber: {
     type: Schema.Types.Number,
   },
+  description: {
+    type: Schema.Types.String,
+    default: "",
+  },
+  userLink: {
+    type: Schema.Types.String,
+    default: "",
+  },
   coordinates: {
     lat: {
       type: Schema.Types.String,

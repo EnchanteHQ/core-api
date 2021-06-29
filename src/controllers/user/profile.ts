@@ -6,22 +6,36 @@ import {
   SuccessResponse,
 } from "../../core/ApiResponse";
 import User, { userModel } from "../../db/models/User";
+import avatarImages from "../../constants";
 
 class ProfileController {
   getProfile = async (req: Request, res: Response): Promise<void> => {
     try {
-      new SuccessResponse("Profile to be served!", { profile: "TBD" }).send(
+      const { id } = req.user;
+
+      const user: User = await userModel.findById(id).select("-__v");
+
+      new SuccessResponse("Profile to be served!", { user }).send(res);
+    } catch (error) {
+      console.error(`Error fetching profile!:>> ${error}`);
+      new InternalErrorResponse("Error fetching profile!", {}).send(res);
+    }
+  };
+
+  avatarImages = async (req: Request, res: Response): Promise<void> => {
+    try {
+      new SuccessResponse("Avatar images to be served!", avatarImages).send(
         res
       );
     } catch (error) {
-      console.log(`tbd:>> ${error}`);
-      new InternalErrorResponse("Error fetching profile!", {}).send(res);
+      console.error(`Error fetching avatar images:>> ${error}`);
+      new InternalErrorResponse("Error fetching avatar images!", {}).send(res);
     }
   };
 
   firstLogin = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { imgUrl, mobileNumber, description, userLink, interests } =
+      const { imgUrl, phoneNumber, description, userLink, interests } =
         req.body;
 
       const { id } = req.user;
@@ -30,7 +44,14 @@ class ProfileController {
 
       const user: User = await userModel.findOneAndUpdate(
         { _id: id },
-        { imgUrl, mobileNumber, description, userLink, interests, firstLogin },
+        {
+          userImg: imgUrl,
+          phoneNumber,
+          description,
+          userLink,
+          interestedIn: interests,
+          firstLogin,
+        },
         { new: true }
       );
 
@@ -38,12 +59,14 @@ class ProfileController {
         new NotFoundResponse("User not found!", {}).send(res);
       }
 
+      // TODO: init rapyd wallet
+
       new SuccessResponse(
         "User details have been filled successfully!",
         user
       ).send(res);
     } catch (error) {
-      console.log(`Error filling up user details:>> ${error}`);
+      console.error(`Error filling up user details:>> ${error}`);
       new InternalErrorResponse("Error filling up user details!", {}).send(res);
     }
   };
@@ -56,6 +79,7 @@ class ProfileController {
         firstLoginFilled: firstLogin,
       }).send(res);
     } catch (error) {
+      console.error(`Unable to fetch first login:>> ${error}`);
       new InternalErrorResponse("Unable to fetch first login", {}).send(res);
     }
   };
