@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import admin from "../config/firebase";
 
 import { InternalErrorResponse, SuccessResponse } from "../core/ApiResponse";
+import User, { userModel } from "../db/models/User";
 import generateJwtToken from "../middlewares/auth";
 
 class AuthController {
@@ -9,7 +10,6 @@ class AuthController {
     try {
       const { token } = req.body;
 
-      // let firebaseUid: string;
       let userDetails: admin.auth.UserRecord;
 
       await admin
@@ -38,15 +38,41 @@ class AuthController {
 
       let jwtToken: string;
 
+      let user: User;
+      let record: User;
+
       if (userDetails !== undefined) {
-        jwtToken = generateJwtToken({ id: userDetails.uid });
+        record = await userModel.findOne({
+          email: userDetails.email,
+        });
+        if (!record) {
+          user = await userModel.create({
+            email: userDetails.email,
+            name: userDetails.displayName,
+            userImg: userDetails.photoURL,
+          });
+        }
       }
 
-      // TODO: send user record to be stored in db
+      if (user) {
+        console.log(user.id);
 
-      new SuccessResponse("Successfully registered!", {
-        jwtToken,
-      }).send(res);
+        jwtToken = generateJwtToken({ id: user.id });
+        new SuccessResponse("Successfully registered!", {
+          jwtToken,
+          firstTimeUser: true,
+        }).send(res);
+      }
+
+      if (record) {
+        console.log(record.id);
+
+        jwtToken = generateJwtToken({ id: record.id });
+        new SuccessResponse("Successful!", {
+          jwtToken,
+          firstTimeUser: false,
+        }).send(res);
+      }
     } catch (e) {
       console.error(`Error in googleAuth:>> ${e}`);
       new InternalErrorResponse(e.message, {}).send(res);
