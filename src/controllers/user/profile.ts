@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { InternalErrorResponse, SuccessResponse } from "../core/ApiResponse";
+import { InternalErrorResponse, SuccessResponse } from "../../core/ApiResponse";
 
-class UserController {
-  profile = async (req: Request, res: Response): Promise<void> => {
+class ProfileController {
+  getProfile = async (req: Request, res: Response): Promise<void> => {
     try {
       new SuccessResponse("Profile to be served!", { profile: "TBD" }).send(
         res
@@ -15,4 +15,4 @@ class UserController {
   };
 }
 
-export default UserController;
+export default ProfileController;

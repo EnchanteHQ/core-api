@@ -33,7 +33,7 @@ app.get("/", (_, res: Response) => {
   }).send(res);
 });
 
-app.use("/v1", userAuthMiddleware, router);
+app.use("/v1", router);
 app.use("/auth", authRouter);
 
 export default app;
