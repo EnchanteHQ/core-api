@@ -23,7 +23,7 @@ class EventController {
         offersWrtEventOrUser,
       }).send(res);
     } catch (error) {
-      console.log(`tbd:>> ${error}`);
+      console.error(`Error sending event details:>> ${error}`);
       new InternalErrorResponse("Error sending event details!", {}).send(res);
     }
   };

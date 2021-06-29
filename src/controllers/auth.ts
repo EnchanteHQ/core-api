@@ -55,7 +55,7 @@ class AuthController {
       }
 
       if (user) {
-        console.log(user.id);
+        // console.log(user.id);
 
         jwtToken = generateJwtToken({ id: user.id });
         new SuccessResponse("Successfully registered!", {
@@ -65,7 +65,7 @@ class AuthController {
       }
 
       if (record) {
-        console.log(record.id);
+        // console.log(record.id);
 
         jwtToken = generateJwtToken({ id: record.id });
         new SuccessResponse("Successful!", {

@@ -46,7 +46,7 @@ const connect = (): void => {
     try {
       console.log("Mongoose default connection open");
     } catch (error) {
-      console.log("Error connecting to DB:", error);
+      console.error("Error connecting to DB:", error);
     }
   });
 

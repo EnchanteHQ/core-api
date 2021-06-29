@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import moment from "moment";
 import UserEventMapping, {
@@ -127,7 +128,7 @@ class ProfileController {
         futureEvents,
       }).send(res);
     } catch (error) {
-      console.log(`tbd:>> ${error}`);
+      console.error(`Error fetching user's events:>> ${error}`);
       new InternalErrorResponse("Error fetching user's events!", {}).send(res);
     }
   };

@@ -68,12 +68,17 @@ class HomeController {
           eventsBasedOnYourInterest.push({ event, availableSeats });
         }
       });
+
+      const tip: string =
+        constants.tips[Math.floor(Math.random() * constants.tips.length)];
+
       new SuccessResponse("The home screen has been sent!", {
         eventsInRange,
         eventsBasedOnYourInterest,
+        tip,
       }).send(res);
     } catch (error) {
-      console.log(`tbd:>> ${error}`);
+      console.error(`Error sending event details:>> ${error}`);
       new InternalErrorResponse("Error sending event details!", {}).send(res);
     }
   };

@@ -6,4 +6,9 @@ export default {
   ],
   latlonToMetersConversion: 111139,
   distanceLimitToFindEventsInMeters: 20000,
+  tips: [
+    "AR payment lets you pay anyone with just one tap, no matter which curreny.",
+    "tip2",
+    "tip3",
+  ],
 } as const;
