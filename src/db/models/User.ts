@@ -14,6 +14,7 @@ export default interface User extends Document {
   }>;
   interestedIn: Array<string>;
   wishlistedEvents: Array<ObjectId>;
+  firstLogin: boolean;
 }
 
 const schema = new Schema({
@@ -77,6 +78,10 @@ const schema = new Schema({
       ref: "Event",
     },
   ],
+  firstLogin: {
+    type: Schema.Types.Boolean,
+    default: false,
+  },
 });
 
 export const userModel = model<User>("User", schema, "Users");

@@ -6,5 +6,6 @@ const profileRouter = Router();
 const profileController = new ProfileController();
 
 profileRouter.get("/get", profileController.getProfile);
+profileRouter.post("/first-login", profileController.firstLogin);
 
 export default profileRouter;

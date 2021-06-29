@@ -18,10 +18,8 @@ passport.use(
   "userStrategy",
   new JwtStrategy(opts, async (jwtPayload: any, done: any) => {
     try {
-      console.log(jwtPayload);
       const user: User = await userModel.findById(jwtPayload.id);
 
-      // done(null, true);
       done(null, user);
     } catch (error) {
       console.error(`JWT middleware error:>> ${error}`);
