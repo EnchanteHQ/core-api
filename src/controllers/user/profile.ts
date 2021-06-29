@@ -33,14 +33,14 @@ class ProfileController {
     }
   };
 
-  firstLogin = async (req: Request, res: Response): Promise<void> => {
+  registration = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { imgUrl, phoneNumber, description, userLink, interests } =
+      const { imgUrl, phoneNumber, description, socialLink, interests } =
         req.body;
 
       const { id } = req.user;
 
-      const firstLogin = true;
+      const registrationCompleted = true;
 
       const user: User = await userModel.findOneAndUpdate(
         { _id: id },
@@ -48,9 +48,9 @@ class ProfileController {
           userImg: imgUrl,
           phoneNumber,
           description,
-          userLink,
+          socialLink,
           interestedIn: interests,
-          firstLogin,
+          registrationCompleted,
         },
         { new: true }
       );
@@ -71,12 +71,15 @@ class ProfileController {
     }
   };
 
-  filledFirstLogin = async (req: Request, res: Response): Promise<void> => {
+  registrationCompleted = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
     try {
-      const { firstLogin } = req.user;
+      const { registrationCompleted } = req.user;
 
-      new SuccessResponse("First Login Check", {
-        firstLoginFilled: firstLogin,
+      new SuccessResponse("Registration completed Check", {
+        registrationCompleted,
       }).send(res);
     } catch (error) {
       console.error(`Unable to fetch first login:>> ${error}`);

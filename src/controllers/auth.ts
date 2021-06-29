@@ -74,7 +74,7 @@ class AuthController {
         }).send(res);
       }
     } catch (e) {
-      console.error(`Error in googleAuth:>> ${e}`);
+      console.error(`Error in google auth:>> ${e}`);
       new InternalErrorResponse(e.message, {}).send(res);
     }
   };

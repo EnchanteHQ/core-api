@@ -14,7 +14,7 @@ export default interface User extends Document {
   }>;
   interestedIn: Array<string>;
   wishlistedEvents: Array<ObjectId>;
-  firstLogin: boolean;
+  registrationCompleted: boolean;
 }
 
 const schema = new Schema({
@@ -32,13 +32,13 @@ const schema = new Schema({
     type: Schema.Types.Number,
   },
   phoneNumber: {
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
   },
   description: {
     type: Schema.Types.String,
     default: "",
   },
-  userLink: {
+  socialLink: {
     type: Schema.Types.String,
     default: "",
   },
@@ -86,7 +86,7 @@ const schema = new Schema({
       ref: "Event",
     },
   ],
-  firstLogin: {
+  registrationCompleted: {
     type: Schema.Types.Boolean,
     default: false,
   },
