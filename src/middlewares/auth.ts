@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 import { ExtractJwt } from "passport-jwt";
 
-// import User, { UserModel } from "../database/models/User";
+import User, { userModel } from "../db/models/User";
 
 const JwtStrategy = require("passport-jwt").Strategy;
 
@@ -18,9 +18,9 @@ passport.use(
   "userStrategy",
   new JwtStrategy(opts, async (jwtPayload: any, done: any) => {
     try {
-      // const user: User = await UserModel.findById(jwtPayload.id);
-      done(null, true);
-      // done(null, user);
+      const user: User = await userModel.findById(jwtPayload.id);
+
+      done(null, user);
     } catch (error) {
       console.error(`JWT middleware error:>> ${error}`);
       done(null, false);
