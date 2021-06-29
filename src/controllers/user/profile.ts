@@ -12,7 +12,7 @@ import {
 import { eventModel } from "../../db/models/Event";
 
 import User, { userModel } from "../../db/models/User";
-import avatarImages from "../../constants";
+import constants from "../../constants";
 
 class ProfileController {
   getProfile = async (req: Request, res: Response): Promise<void> => {
@@ -30,9 +30,10 @@ class ProfileController {
 
   avatarImages = async (req: Request, res: Response): Promise<void> => {
     try {
-      new SuccessResponse("Avatar images to be served!", avatarImages).send(
-        res
-      );
+      new SuccessResponse(
+        "Avatar images to be served!",
+        constants.avatarImages
+      ).send(res);
     } catch (error) {
       console.error(`Error fetching avatar images:>> ${error}`);
       new InternalErrorResponse("Error fetching avatar images!", {}).send(res);

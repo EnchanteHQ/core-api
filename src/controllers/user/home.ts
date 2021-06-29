@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { InternalErrorResponse, SuccessResponse } from "../../core/ApiResponse";
 import Event, { eventModel } from "../../db/models/Event";
 import { userModel } from "../../db/models/User";
+import constants from "../../constants";
 
 class HomeController {
   ifInRange = (
@@ -15,14 +16,13 @@ class HomeController {
     const eventLatInt = parseFloat(eventLat);
     const eventLonInt = parseFloat(eventLon);
 
-    const latlonToMetersConversion = 111139;
-
     const distInMeters: number =
-      latlonToMetersConversion *
+      constants.latlonToMetersConversion *
       Math.sqrt(
         (eventLatInt - userLatInt) ** 2 + (eventLonInt - userLonInt) ** 2
       );
-    if (distInMeters <= 20000) return true;
+    if (distInMeters <= constants.distanceLimitToFindEventsInMeters)
+      return true;
     return false;
   };
 
