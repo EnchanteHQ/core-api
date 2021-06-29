@@ -1,4 +1,4 @@
-import { Schema, model, Document, ObjectId } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 export default interface Event extends Document {
   name: string;
@@ -13,6 +13,14 @@ export default interface Event extends Document {
   tags: Array<string>;
   duration: { startTimeAndDate: string; endTimeAndDate: string };
   status: string;
+  faq: Array<{ question: string; answer: string }>;
+  termsAndConditions: string;
+  passes: Array<{
+    passName: string;
+    availableNumber: number;
+    price: number;
+    description: string;
+  }>;
 }
 
 const schema = new Schema({
@@ -79,6 +87,35 @@ const schema = new Schema({
   status: {
     type: Schema.Types.String,
   },
+  faq: [
+    {
+      question: {
+        type: Schema.Types.String,
+      },
+      answer: {
+        type: Schema.Types.String,
+      },
+    },
+  ],
+  termsAndConditions: {
+    type: Schema.Types.String,
+  },
+  passes: [
+    {
+      passName: {
+        type: Schema.Types.String,
+      },
+      availableNumber: {
+        type: Schema.Types.Number,
+      },
+      price: {
+        type: Schema.Types.Number,
+      },
+      description: {
+        type: Schema.Types.String,
+      },
+    },
+  ],
 });
 
 export const eventModel = model<Event>("Event", schema, "Events");

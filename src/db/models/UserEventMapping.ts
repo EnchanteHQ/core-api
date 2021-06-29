@@ -5,6 +5,7 @@ export default interface UserEventMapping extends Document {
   userId: ObjectId;
   transactions: Array<ObjectId>;
   budget: ObjectId;
+  passType: ObjectId;
 }
 
 const schema = new Schema({
@@ -18,7 +19,7 @@ const schema = new Schema({
     ref: "User",
     required: true,
   },
-  trnasactions: [
+  transactions: [
     {
       type: Schema.Types.ObjectId,
       ref: "Transaction",
@@ -27,6 +28,9 @@ const schema = new Schema({
   budget: {
     type: Schema.Types.ObjectId,
     ref: "Budget",
+  },
+  passType: {
+    type: Schema.Types.ObjectId,
   },
 });
 
