@@ -9,7 +9,7 @@ class EventController {
   getEventById = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      const { userId } = req.body;
+      const userId = req.user.id;
       const events: Event = await eventModel.findById(id);
 
       const offersWrtEventOrUser: Array<Offer> = await offerModel.find({

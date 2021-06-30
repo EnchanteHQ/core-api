@@ -3,33 +3,13 @@ import { InternalErrorResponse, SuccessResponse } from "../../core/ApiResponse";
 import Event, { eventModel } from "../../db/models/Event";
 import { userModel } from "../../db/models/User";
 import constants from "../../constants";
+import ifInRange from "../../helpers/ifEventInRange";
 
 class HomeController {
-  ifInRange = (
-    userLat: string,
-    userLon: string,
-    eventLat: string,
-    eventLon: string
-  ): boolean => {
-    const userLatInt = parseFloat(userLat);
-    const userLonInt = parseFloat(userLon);
-    const eventLatInt = parseFloat(eventLat);
-    const eventLonInt = parseFloat(eventLon);
-
-    const distInMeters: number =
-      constants.latlonToMetersConversion *
-      Math.sqrt(
-        (eventLatInt - userLatInt) ** 2 + (eventLonInt - userLonInt) ** 2
-      );
-    if (distInMeters <= constants.distanceLimitToFindEventsInMeters)
-      return true;
-    return false;
-  };
-
   getHomePage = async (req: Request, res: Response): Promise<void> => {
     try {
       const { lat, lon } = req.query;
-      const { userId } = req.body;
+      const userId = req.user.id;
       const eventsInRange: Array<{ event: Event; availableSeats: number }> = [];
       const eventsBasedOnYourInterest: Array<{
         event: Event;
@@ -41,7 +21,7 @@ class HomeController {
       allEvents.forEach((event) => {
         const eventCoordinates: { lat: string; lon: string } =
           event.location.coordinates;
-        const eventInRange = this.ifInRange(
+        const eventInRange = ifInRange(
           lat.toString(),
           lon.toString(),
           eventCoordinates.lat,

@@ -97,7 +97,7 @@ class ProfileController {
 
   getMyEvents = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { userId } = req.body;
+      const userId = req.user.id;
       // const currEvents = await eventModel.find();
       const now = moment().format("DD MMM YYYY HH:mm");
       const userEvents: Array<UserEventMapping> = await userEventMappingModel
