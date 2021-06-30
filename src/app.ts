@@ -13,7 +13,7 @@ import { SuccessResponse } from "./core/ApiResponse";
 dotenv.config();
 
 process.on("uncaughtException", (error) => {
-  console.log("Error:>>", error);
+  console.error("Error:>>", error);
 });
 
 const app: Application = express();

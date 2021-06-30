@@ -1,12 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
+import moment from "moment";
+import UserEventMapping, {
+  userEventMappingModel,
+} from "../../db/models/UserEventMapping";
 
 import {
   InternalErrorResponse,
   NotFoundResponse,
   SuccessResponse,
 } from "../../core/ApiResponse";
+import { eventModel } from "../../db/models/Event";
+
 import User, { userModel } from "../../db/models/User";
-import avatarImages from "../../constants";
+import constants from "../../constants";
 
 class ProfileController {
   getProfile = async (req: Request, res: Response): Promise<void> => {
@@ -24,9 +31,10 @@ class ProfileController {
 
   avatarImages = async (req: Request, res: Response): Promise<void> => {
     try {
-      new SuccessResponse("Avatar images to be served!", avatarImages).send(
-        res
-      );
+      new SuccessResponse(
+        "Avatar images to be served!",
+        constants.avatarImages
+      ).send(res);
     } catch (error) {
       console.error(`Error fetching avatar images:>> ${error}`);
       new InternalErrorResponse("Error fetching avatar images!", {}).send(res);
@@ -84,6 +92,44 @@ class ProfileController {
     } catch (error) {
       console.error(`Unable to fetch first login:>> ${error}`);
       new InternalErrorResponse("Unable to fetch first login", {}).send(res);
+    }
+  };
+
+  getMyEvents = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = req.user.id;
+      // const currEvents = await eventModel.find();
+      const now = moment().format(constants.momentDateFormat);
+      const userEvents: Array<UserEventMapping> = await userEventMappingModel
+        .find({ userId }, "eventId budget passType")
+        .populate({
+          path: "eventId",
+          model: eventModel,
+        });
+      const pastEvents = [];
+      const futureEvents = [];
+
+      userEvents.forEach((event) => {
+        const eventDetails: any = event.eventId;
+        let passForCurrentEvent: string;
+        eventDetails.passes.forEach((pass) => {
+          if (pass.id === event.passType.toString()) {
+            passForCurrentEvent = pass.passName;
+          }
+        });
+        if (eventDetails.duration.startTimeAndDate <= now) {
+          pastEvents.push(event, passForCurrentEvent);
+        } else {
+          futureEvents.push(event, passForCurrentEvent);
+        }
+      });
+      new SuccessResponse("User's events have been sent!", {
+        pastEvents,
+        futureEvents,
+      }).send(res);
+    } catch (error) {
+      console.error(`Error fetching user's events:>> ${error}`);
+      new InternalErrorResponse("Error fetching user's events!", {}).send(res);
     }
   };
 }

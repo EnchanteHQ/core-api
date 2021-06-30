@@ -1,5 +1,6 @@
 #Files
 package-lock.json
+script.ts
 
 # Logs
 logs

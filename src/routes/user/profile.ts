@@ -6,6 +6,7 @@ const profileRouter = Router();
 const profileController = new ProfileController();
 
 profileRouter.get("/get", profileController.getProfile);
+profileRouter.get("/get-my-events", profileController.getMyEvents);
 profileRouter.get("/get-avatar-images", profileController.avatarImages);
 profileRouter.post("/registration", profileController.registration);
 profileRouter.get(
