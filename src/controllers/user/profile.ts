@@ -99,7 +99,7 @@ class ProfileController {
     try {
       const userId = req.user.id;
       // const currEvents = await eventModel.find();
-      const now = moment().format("DD MMM YYYY HH:mm");
+      const now = moment().format(constants.momentDateFormat);
       const userEvents: Array<UserEventMapping> = await userEventMappingModel
         .find({ userId }, "eventId budget passType")
         .populate({

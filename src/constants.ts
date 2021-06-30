@@ -11,4 +11,5 @@ export default {
     "tip2",
     "tip3",
   ],
+  momentDateFormat: "DD MMM YYYY HH:mm",
 } as const;
