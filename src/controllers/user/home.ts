@@ -34,9 +34,6 @@ class HomeController {
           });
           eventsInRange.push({ event, availableSeats });
         }
-      });
-
-      allEvents.forEach((event) => {
         const itMatched = event.tags.some((tag) =>
           user.interestedIn.includes(tag)
         );
