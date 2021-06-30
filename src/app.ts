@@ -9,6 +9,7 @@ import router from "./routes/index";
 import authRouter from "./routes/auth";
 
 import { SuccessResponse } from "./core/ApiResponse";
+import RapydApi from "./util/axios";
 
 dotenv.config();
 
@@ -31,6 +32,11 @@ app.get("/", (_, res: Response) => {
   new SuccessResponse("Enchante", {
     status: "Up and ready to race!",
   }).send(res);
+});
+
+app.get("/test", async () => {
+  const data = await RapydApi.get("/data/countries");
+  console.log(data.data);
 });
 
 app.use("/v1", userAuthMiddleware, router);
