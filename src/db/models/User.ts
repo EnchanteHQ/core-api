@@ -52,7 +52,7 @@ const schema = new Schema({
       default: "",
     },
   },
-  walletId: { type: Schema.Types.String, unique: true },
+  walletId: { type: Schema.Types.String },
   eventsRegistered: [
     {
       eventId: {
