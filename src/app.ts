@@ -8,8 +8,7 @@ import { connect } from "./db/index";
 import router from "./routes/index";
 import authRouter from "./routes/auth";
 
-import { InternalErrorResponse, SuccessResponse } from "./core/ApiResponse";
-import RapydApi from "./util/axios";
+import { SuccessResponse } from "./core/ApiResponse";
 
 dotenv.config();
 
@@ -32,17 +31,6 @@ app.get("/", (_, res: Response) => {
   new SuccessResponse("Enchante", {
     status: "Up and ready to race!",
   }).send(res);
-});
-
-app.get("/test", async (_, res: Response) => {
-  try {
-    const data = await RapydApi.get("/data/countries");
-    console.log(data.data);
-    new SuccessResponse("Success in error", data.data).send(res);
-  } catch (e) {
-    console.error("Error in test route");
-    new InternalErrorResponse("Error in test route", {}).send(res);
-  }
 });
 
 app.use("/v1", userAuthMiddleware, router);
