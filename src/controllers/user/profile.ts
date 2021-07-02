@@ -14,6 +14,7 @@ import { eventModel } from "../../db/models/Event";
 
 import User, { userModel } from "../../db/models/User";
 import constants from "../../constants";
+import RapydApi from "../../util/axios";
 
 class ProfileController {
   getProfile = async (req: Request, res: Response): Promise<void> => {
@@ -67,7 +68,61 @@ class ProfileController {
         new NotFoundResponse("User not found!", {}).send(res);
       }
 
-      // TODO: init rapyd wallet
+      const wallet = await RapydApi.post("/user", {
+        first_name: user.name.split(" ")[0],
+        last_name: user.name.split(" ")[1],
+        email: user.email,
+        ewallet_reference_id: "user.id",
+        metadata: {
+          merchant_defined: false,
+        },
+        phone_number: user.phoneNumber,
+        type: "person",
+        contact: {
+          phone_number: user.phoneNumber,
+          email: user.email,
+          first_name: user.name.split(" ")[0],
+          last_name: user.name.split(" ")[1],
+          mothers_name: "",
+          contact_type: "personal",
+          address: {
+            name: "John Doe",
+            line_1: "123 Main Street",
+            line_2: "",
+            line_3: "",
+            city: "Anytown",
+            state: "NY",
+            country: "US",
+            zip: "12345",
+            phone_number: "+14155551111",
+            metadata: {},
+            canton: "",
+            district: "",
+          },
+          identification_type: "",
+          identification_number: "",
+          date_of_birth: "",
+          country: "",
+          nationality: "",
+          metadata: {
+            merchant_defined: false,
+          },
+        },
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error);
+          console.log(error.response.data);
+          throw new Error(error.response.data.status.message);
+        }
+      });
+
+      if (wallet) {
+        await userModel.findOneAndUpdate(
+          { _id: id },
+          { walletId: wallet.data.data.id },
+          { new: true }
+        );
+      }
 
       new SuccessResponse(
         "User details have been filled successfully!",
@@ -75,7 +130,10 @@ class ProfileController {
       ).send(res);
     } catch (error) {
       console.error(`Error filling up user details:>> ${error}`);
-      new InternalErrorResponse("Error filling up user details!", {}).send(res);
+
+      new InternalErrorResponse("Error filling up user details!", {
+        error: `${error}`,
+      }).send(res);
     }
   };
 

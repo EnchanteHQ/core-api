@@ -20,11 +20,18 @@ const RapydApi = axios.create({
 
 RapydApi.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
-    const { method, data = {} } = config;
+    let data = {};
+    const { method } = config;
+
+    data = config.data;
+
     const urlPath = config.url;
 
-    const requiredHeaders = preRequestScript(method, data, urlPath);
+    const requiredHeaders = preRequestScript(
+      method,
+      JSON.stringify(data),
+      urlPath
+    );
 
     config.headers.salt = requiredHeaders.salt;
     config.headers.timestamp = requiredHeaders.timestamp;
@@ -32,7 +39,6 @@ RapydApi.interceptors.request.use(
     return config;
   },
   (error) => {
-    // Do something with request error
     console.error("Error with Rapyd Api Interceptor");
 
     Promise.reject(error);
