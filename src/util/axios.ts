@@ -24,14 +24,11 @@ RapydApi.interceptors.request.use(
     const { method } = config;
 
     data = config.data;
+    const stringifyData = method === "get" ? "" : JSON.stringify(data);
 
     const urlPath = config.url;
 
-    const requiredHeaders = preRequestScript(
-      method,
-      JSON.stringify(data),
-      urlPath
-    );
+    const requiredHeaders = preRequestScript(method, stringifyData, urlPath);
 
     config.headers.salt = requiredHeaders.salt;
     config.headers.timestamp = requiredHeaders.timestamp;
