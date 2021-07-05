@@ -13,5 +13,6 @@ profileRouter.get(
   "/registration-completed",
   profileController.registrationCompleted
 );
+profileRouter.get("/get-my-wallet", profileController.getMyWallet);
 
 export default profileRouter;

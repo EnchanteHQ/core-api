@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import moment from "moment";
+import { Types } from "mongoose";
 import UserEventMapping, {
   userEventMappingModel,
 } from "../../db/models/UserEventMapping";
@@ -15,6 +15,7 @@ import { eventModel } from "../../db/models/Event";
 import User, { userModel } from "../../db/models/User";
 import constants from "../../constants";
 import RapydApi from "../../util/axios";
+import Offer, { offerModel } from "../../db/models/Offer";
 
 class ProfileController {
   getProfile = async (req: Request, res: Response): Promise<void> => {
@@ -72,7 +73,7 @@ class ProfileController {
         first_name: user.name.split(" ")[0],
         last_name: user.name.split(" ")[1],
         email: user.email,
-        ewallet_reference_id: "user.id",
+        ewallet_reference_id: user.id,
         metadata: {
           merchant_defined: false,
         },
@@ -188,6 +189,40 @@ class ProfileController {
     } catch (error) {
       console.error(`Error fetching user's events:>> ${error}`);
       new InternalErrorResponse("Error fetching user's events!", {}).send(res);
+    }
+  };
+
+  getMyWallet = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { walletId } = req.user;
+      const userId = req.user.id;
+      const userWallet = await RapydApi.get(`/user/${walletId}`).catch(
+        (error) => {
+          if (error.response) {
+            console.log(error);
+            console.log(error.response.data);
+            throw new Error(error.response.data.status.message);
+          }
+        }
+      );
+      if (!userWallet) {
+        console.log("Unable to find user wallet");
+        throw new Error("Unable to find user wallet");
+      }
+
+      const offersForUser: Array<Offer> = await offerModel.find({
+        "scope.userId": Types.ObjectId(userId),
+      });
+
+      new SuccessResponse("Wallet details have been sent!", {
+        userWallet: userWallet.data.data,
+        offersForUser,
+      }).send(res);
+    } catch (err) {
+      new InternalErrorResponse("Error fetching user wallet", { err }).send(
+        res
+      );
+      console.log(err);
     }
   };
 }
