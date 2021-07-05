@@ -9,8 +9,6 @@ class OfferController {
       const { id } = req.params;
 
       const offer: Offer = await offerModel.findById(id, "-scope");
-      console.log(offer);
-      console.log(id);
 
       new SuccessResponse("The requested offer has been sent!", {
         offer,
