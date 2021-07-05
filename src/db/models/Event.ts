@@ -51,6 +51,10 @@ const schema = new Schema({
     type: Schema.Types.String,
     default: "",
   },
+  schedule: {
+    type: Schema.Types.String,
+    default: "",
+  },
   location: {
     humanformAddress: {
       type: Schema.Types.String,
