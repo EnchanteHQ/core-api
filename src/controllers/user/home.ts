@@ -46,7 +46,7 @@ class HomeController {
         }
       });
 
-      const tip: string =
+      const tip: { title: string; description: string } =
         constants.tips[Math.floor(Math.random() * constants.tips.length)];
 
       new SuccessResponse("The home screen has been sent!", {

@@ -7,9 +7,21 @@ export default {
   latlonToMetersConversion: 111139,
   distanceLimitToFindEventsInMeters: 20000,
   tips: [
-    "AR payment lets you pay anyone with just one tap, no matter which curreny.",
-    "tip2",
-    "tip3",
+    {
+      title: "Tip 1",
+      description:
+        "One AR payment lets you pay anyone with just one tap, no matter which curreny.",
+    },
+    {
+      title: "Tip 2",
+      description:
+        "Two AR payment lets you pay anyone with just one tap, no matter which curreny.",
+    },
+    {
+      title: "Tip 3",
+      description:
+        "Three AR payment lets you pay anyone with just one tap, no matter which curreny.",
+    },
   ],
   momentDateFormat: "DD MMM YYYY HH:mm",
 } as const;
