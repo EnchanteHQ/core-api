@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import admin from "../config/firebase";
+import admin from "../../config/firebase";
 
-import { InternalErrorResponse, SuccessResponse } from "../core/ApiResponse";
-import User, { userModel } from "../db/models/User";
-import generateJwtToken from "../middlewares/auth";
+import { InternalErrorResponse, SuccessResponse } from "../../core/ApiResponse";
+import User, { userModel } from "../../db/models/User";
+import generateJwtToken from "../../middlewares/auth";
 
 class AuthController {
   googleAuth = async (req: Request, res: Response): Promise<void> => {

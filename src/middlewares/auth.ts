@@ -4,6 +4,7 @@
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import { ExtractJwt } from "passport-jwt";
+import Admin, { adminModel } from "../db/models/Admin";
 
 import User, { userModel } from "../db/models/User";
 
@@ -21,6 +22,19 @@ passport.use(
       const user: User = await userModel.findById(jwtPayload.id);
 
       done(null, user);
+    } catch (error) {
+      console.error(`JWT middleware error:>> ${error}`);
+      done(null, false);
+    }
+  })
+);
+
+passport.use(
+  "adminStrategy",
+  new JwtStrategy(opts, async (jwtPayload: any, done: any) => {
+    try {
+      const admin: Admin = await adminModel.findById(jwtPayload.id);
+      done(null, admin);
     } catch (error) {
       console.error(`JWT middleware error:>> ${error}`);
       done(null, false);
