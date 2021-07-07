@@ -5,7 +5,9 @@ import passport from "passport";
 
 import { connect } from "./db/index";
 
-import router from "./routes/index";
+import userRouter from "./routes/index";
+import adminRouter from "./routes/admin";
+
 import authRouter from "./routes/auth";
 
 import { InternalErrorResponse, SuccessResponse } from "./core/ApiResponse";
@@ -28,6 +30,9 @@ const userAuthMiddleware = passport.authenticate("userStrategy", {
   session: false,
 });
 
+const adminAuthMiddleware = passport.authenticate("adminStrategy", {
+  session: false,
+});
 app.get("/", (_, res: Response) => {
   new SuccessResponse("Enchante", {
     status: "Up and ready to race!",
@@ -45,7 +50,8 @@ app.get("/test", async (_, res: Response) => {
   }
 });
 
-app.use("/v1", userAuthMiddleware, router);
+app.use("/v1", userAuthMiddleware, userRouter);
+app.use("/v2", adminAuthMiddleware, adminRouter);
 app.use("/auth", authRouter);
 
 export default app;

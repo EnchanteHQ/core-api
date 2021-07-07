@@ -1,10 +1,14 @@
 import { Router } from "express";
 
-import AuthController from "../controllers/auth";
+import UserAuthController from "../controllers/user/auth";
+import AdminAuthController from "../controllers/admin/auth";
 
 const authRouter = Router();
-const authController = new AuthController();
+const userAuthController = new UserAuthController();
+const adminAuthController = new AdminAuthController();
 
-authRouter.post("/google", authController.googleAuth);
+authRouter.post("/google", userAuthController.googleAuth);
+authRouter.post("/login", adminAuthController.login);
+authRouter.post("/register", adminAuthController.register);
 
 export default authRouter;
