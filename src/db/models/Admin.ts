@@ -3,6 +3,7 @@ import { Schema, model, Document, ObjectId } from "mongoose";
 export default interface Admin extends Document {
   email: string;
   orgName: string;
+  phoneNo: string;
   password: string;
   eventId: Array<ObjectId>;
   walletId: string;
