@@ -8,19 +8,19 @@ export default {
   distanceLimitToFindEventsInMeters: 20000,
   tips: [
     {
-      title: "Tip 1",
+      title: "Make sure your location is turned on",
       description:
-        "One AR payment lets you pay anyone with just one tap, no matter which curreny.",
+        "Location needs to be turned on for the app to give accurate results",
     },
     {
-      title: "Tip 2",
+      title: "Use AR to pay!",
       description:
-        "Two AR payment lets you pay anyone with just one tap, no matter which curreny.",
+        "AR payment lets you pay anyone with just one tap, no IDs required",
     },
     {
-      title: "Tip 3",
+      title: "Do checkout your Tokens",
       description:
-        "Three AR payment lets you pay anyone with just one tap, no matter which curreny.",
+        "Tokens can be used to claim gifts and event passes for free :')",
     },
   ],
   momentDateFormat: "DD MMM YYYY HH:mm",
