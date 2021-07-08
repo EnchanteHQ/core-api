@@ -16,7 +16,7 @@ const options = {
   useFindAndModify: false,
   autoIndex: true,
   poolSize: 10,
-  bufferMaxEntries: 0,
+  // bufferMaxEntries: 0,
   connectTimeoutMS: 10000,
   socketTimeoutMS: 45000,
 };
