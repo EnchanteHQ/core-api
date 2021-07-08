@@ -176,6 +176,7 @@ class ProfileController {
         let passForCurrentEvent: string;
         eventDetails.passes.forEach((pass) => {
           if (pass.id === event.passType.toString()) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             passForCurrentEvent = pass.passName;
           }
         });
@@ -183,9 +184,9 @@ class ProfileController {
           moment(eventDetails.duration.startTimeAndDate, "DD MMM YYYY HH:mm") <
           moment(now, "DD MMM YYYY HH:mm")
         ) {
-          pastEvents.push(event, passForCurrentEvent);
+          pastEvents.push(event);
         } else {
-          futureEvents.push(event, passForCurrentEvent);
+          futureEvents.push(event);
         }
       });
       new SuccessResponse("User's events have been sent!", {
