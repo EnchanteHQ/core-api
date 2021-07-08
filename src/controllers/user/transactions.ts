@@ -60,7 +60,7 @@ class transactionController {
         throw new Error("No such pass exists for the given event");
       }
 
-      const updatedEvent = await eventModel
+      await eventModel
         .findByIdAndUpdate(eventId, eventToReducePassQuantityFound, {
           new: true,
         })
