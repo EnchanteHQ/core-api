@@ -12,6 +12,7 @@ import authRouter from "./routes/auth";
 
 import { InternalErrorResponse, SuccessResponse } from "./core/ApiResponse";
 import RapydApi from "./util/axios";
+import miscRouter from "./routes/misc";
 
 dotenv.config();
 
@@ -53,5 +54,6 @@ app.get("/test", async (_, res: Response) => {
 app.use("/v1", userAuthMiddleware, userRouter);
 app.use("/v2", adminAuthMiddleware, adminRouter);
 app.use("/auth", authRouter);
+app.use("/misc", miscRouter);
 
 export default app;

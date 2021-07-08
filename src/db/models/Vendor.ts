@@ -32,6 +32,9 @@ const schema = new Schema({
     type: Schema.Types.String,
     default: "",
   },
+  ARID: {
+    type: Schema.Types.String,
+  },
 });
 
 export const vendorModel = model<Vendor>("Vendor", schema, "Vendors");

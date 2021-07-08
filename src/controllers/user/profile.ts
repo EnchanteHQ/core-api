@@ -169,6 +169,7 @@ class ProfileController {
       const futureEvents = [];
 
       userEvents.forEach((event) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const eventDetails: any = event.eventId;
         let passForCurrentEvent: string;
         eventDetails.passes.forEach((pass) => {
