@@ -36,7 +36,7 @@ const adminAuthMiddleware = passport.authenticate("adminStrategy", {
 });
 app.get("/", (_, res: Response) => {
   new SuccessResponse("Enchante", {
-    status: "Up and ready to race!",
+    status: "Up and ready to race in Formula 0001: Rapyd Fintech Grand Prix!",
   }).send(res);
 });
 

@@ -3,6 +3,7 @@ import { Schema, model, Document, ObjectId } from "mongoose";
 export default interface Admin extends Document {
   email: string;
   orgName: string;
+  phoneNo: string;
   password: string;
   eventId: Array<ObjectId>;
   walletId: string;
@@ -10,6 +11,10 @@ export default interface Admin extends Document {
 
 const schema = new Schema({
   email: {
+    type: Schema.Types.String,
+    required: true,
+  },
+  phoneNo: {
     type: Schema.Types.String,
     required: true,
   },
