@@ -13,6 +13,10 @@ const schema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+  phoneNo: {
+    type: Schema.Types.String,
+    required: true,
+  },
   orgName: {
     type: Schema.Types.String,
     default: "",

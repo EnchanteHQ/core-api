@@ -206,7 +206,17 @@ class ProfileController {
           }
         }
       );
-      if (!userWallet) {
+      const userWalletAccounts = await RapydApi.get(
+        `/user/${walletId}/accounts`
+      ).catch((error) => {
+        if (error.response) {
+          console.log(error);
+          console.log(error.response.data);
+          throw new Error(error.response.data.status.message);
+        }
+      });
+
+      if (!userWallet || !userWalletAccounts) {
         console.log("Unable to find user wallet");
         throw new Error("Unable to find user wallet");
       }
@@ -217,6 +227,7 @@ class ProfileController {
 
       new SuccessResponse("Wallet details have been sent!", {
         userWallet: userWallet.data.data,
+        userWalletAccounts: userWalletAccounts.data.data,
         offersForUser,
       }).send(res);
     } catch (err) {
