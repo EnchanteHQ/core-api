@@ -16,6 +16,8 @@ Add your friends and find them on the map right in the app so that it is easy to
 
 ## About the Backend
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/daec67994e9b94414156?action=collection%2Fimport)
+
 - Standard response structure was followed for a smoother integration
 - Google Oauth were used for the authentication along with Passport JWT
 - MVC architecture was implemented
