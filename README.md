@@ -81,21 +81,4 @@ yarn start
 - [Postman API Documentation](https://documenter.getpostman.com/view/11033610/Tzm5JxSi#2b2e1dd6-1f04-4876-86fa-eb554e865128)
 - [Figma Designs](https://links.enchante.cf/figma)
 
-## Contributors ✨
-
-<table>
-	<tr>
-    	<td align="center">
-    		<a href="https://github.com/r-ush"><img src="https://avatars.githubusercontent.com/r-ush" width="100px;" alt="Rush"/><br /><sub><b>Aarush Bhat</b></sub></a>
-    	</td>
-			<td align="center">
-    		<a href="https://github.com/DarthBenro008"><img src="https://avatars.githubusercontent.com/DarthBenro008" width="100px;" alt=""/><br /><sub><b>Hemanth Krishna</b></sub></a>
-    	</td>
-		<td align="center">
-			<a href="https://github.com/ShubhamPalriwala"><img src="https://avatars.githubusercontent.com/ShubhamPalriwala" width="100px;" alt="Noob"/><br /><sub><b>Shubham Palriwala</b></sub></a>
-		</td>
-    </tr>
-
-</table>
-
 <p align="center">Made with ❤ by Team Alpha</p>
