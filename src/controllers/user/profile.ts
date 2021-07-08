@@ -179,7 +179,10 @@ class ProfileController {
             passForCurrentEvent = pass.passName;
           }
         });
-        if (eventDetails.duration.startTimeAndDate <= now) {
+        if (
+          moment(eventDetails.duration.startTimeAndDate, "DD MMM YYYY HH:mm") <
+          moment(now, "DD MMM YYYY HH:mm")
+        ) {
           pastEvents.push(event, passForCurrentEvent);
         } else {
           futureEvents.push(event, passForCurrentEvent);
